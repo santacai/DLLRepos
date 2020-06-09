@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using WindowsForms4HXPos2;
 
 namespace WindowsForms4HXPos
 {
@@ -16,7 +15,7 @@ namespace WindowsForms4HXPos
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new WindowsForms4HXPos2.MainForm());
+            Application.Run(new MainForm());
         }
     }
 }

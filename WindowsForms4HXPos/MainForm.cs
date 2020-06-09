@@ -17,79 +17,79 @@ namespace WindowsForms4HXPos
         [StructLayout(LayoutKind.Sequential)]
         public struct DATA_IN
         {
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 3)]
             public byte[] transtype ; //3交易类型
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 12)]
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 13)]
             public byte[] amout; //13交易金额
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 1)]
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
             public byte[] transflag; //2交易标志1，零售，2：批发
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 3)]
             public byte[] commport; //3串口号-保留
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 3)]
             public byte[] paycnt; //3分期付款期数，如果不是分期付款，则传0
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 6)]
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 7)]
             public byte[] oldpostrace; //7原交易凭证号
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 6)]
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 7)]
             public byte[] oldbatchcode; //7原交易批次号
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 8)]
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 9)]
             public byte[] terminal; //9终端号
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 12)]
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 13)]
             public byte[] transamount; //13退货，撤消时收银机通过amount传金额
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 8)]
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 9)]
             public byte[] oldtransdate; //9原交易日期（退货，撤销时用到）
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 6)]
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 7)]
             public byte[] oldauthornum; //7原交易授权号
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 19)]
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 20)]
             public byte[] oldtranscardnum; //20原交易卡号
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 12)]
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 13)]
             public byte[] clientMAC; //13瘦终端MAC地址
                                      //以下为新增内容4
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 5)]
             public byte[] branchno; //5门店号
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 20)]
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 21)]
             public byte[] orderno; //21缴款订单号
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 1)]
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
             public byte[] signature; // 2电子签名‘0’=不需要，'1'=需要
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 12)]
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 13)]
             public byte[] fqpayno; //13分期项目号
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 12)]
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 13)]
             public byte[] oldHostSer; //13原交易参考号
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 20)]
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 21)]
             public byte[] payType; //21缴款类型
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 40)]
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 41)]
             public byte[] name;//41缴款人
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 14)]
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 15)]
             public byte[] beginTime;//15起始时间
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 14)]
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 15)]
             public byte[] endTime;//15终止时间
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 50)]
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 51)]
             public byte[] note;//51备注
             
            public DATA_IN(int inData)
             {
-                transtype = new byte[2];
-                amout = new byte[12];
-                transflag = new byte[1];
-                commport = new byte[2];
-                paycnt = new byte[2];
-                oldpostrace = new byte[6];
-                oldbatchcode = new byte[6];
-                terminal = new byte[8];
-                transamount = new byte[12];
-                oldtransdate = new byte[8];
-                oldauthornum = new byte[6];
-                oldtranscardnum = new byte[19];
-                clientMAC = new byte[12];
-                branchno = new byte[4];
-                orderno = new byte[20];
-                signature = new byte[1];
-                fqpayno = new byte[12];
-                oldHostSer = new byte[12];
-                payType = new byte[20];
-                name = new byte[40];
-                beginTime = new byte[14];
-                endTime = new byte[14];
-                note = new byte[50];
+                transtype = new byte[3];
+                amout = new byte[13];
+                transflag = new byte[2];
+                commport = new byte[3];
+                paycnt = new byte[3];
+                oldpostrace = new byte[7];
+                oldbatchcode = new byte[7];
+                terminal = new byte[9];
+                transamount = new byte[13];
+                oldtransdate = new byte[9];
+                oldauthornum = new byte[7];
+                oldtranscardnum = new byte[20];
+                clientMAC = new byte[13];
+                branchno = new byte[5];
+                orderno = new byte[21];
+                signature = new byte[2];
+                fqpayno = new byte[13];
+                oldHostSer = new byte[13];
+                payType = new byte[21];
+                name = new byte[41];
+                beginTime = new byte[15];
+                endTime = new byte[15];
+                note = new byte[51];
             }
         };
         [StructLayout(LayoutKind.Sequential)]
@@ -146,15 +146,40 @@ namespace WindowsForms4HXPos
         private void requestBtn_Click(object sender, EventArgs e)
         {
             DATA_IN data_IN = new DATA_IN(1);
-            data_IN.transtype = Encoding.UTF8.GetBytes("03".PadRight(2, '\0'));
-            data_IN.amout = Encoding.UTF8.GetBytes("000000000001");
-            data_IN.orderno = Encoding.UTF8.GetBytes("1".PadRight(20, '\0'));
-            data_IN.name = Encoding.UTF8.GetBytes("1".PadRight(40, '\0'));
-            data_IN.beginTime = Encoding.UTF8.GetBytes("20200516124700".PadRight(14, '\0'));
-            data_IN.endTime = Encoding.UTF8.GetBytes("20200516124700".PadRight(14, '\0'));
-            data_IN.note = Encoding.UTF8.GetBytes("1".PadRight(50, '\0'));
+            Array.Copy(Encoding.UTF8.GetBytes("03"), data_IN.transtype, Encoding.UTF8.GetBytes("03").Length);
+            Array.Copy(Encoding.UTF8.GetBytes("000000000001"), data_IN.amout, Encoding.UTF8.GetBytes("000000000001").Length);
+            Array.Copy(Encoding.UTF8.GetBytes("1"), data_IN.orderno, Encoding.UTF8.GetBytes("1").Length);
+            Array.Copy(Encoding.UTF8.GetBytes("1"), data_IN.name, Encoding.UTF8.GetBytes("1").Length);
+            var dataTimeArray = Encoding.UTF8.GetBytes(DateTime.Now.ToString("yyyyMMddHHmmss"));
+            Array.Copy(dataTimeArray, data_IN.beginTime, dataTimeArray.Length);
+            Array.Copy(dataTimeArray, data_IN.endTime, dataTimeArray.Length);
+            Array.Copy(Encoding.UTF8.GetBytes("1"), data_IN.note, Encoding.UTF8.GetBytes("1").Length);
+
             DATA_OUT data_OUT = new DATA_OUT(2);
             long result = CebMisPosInterface(ref data_IN, ref data_OUT);
+            Console.WriteLine(Encoding.Default.GetString(data_OUT.RETCODE));
+            Console.WriteLine(Encoding.Default.GetString(data_OUT.CARDNO));
+            Console.WriteLine(Encoding.Default.GetString(data_OUT.CARDTYPE));
+            Console.WriteLine(Encoding.Default.GetString(data_OUT.AMOUNT));
+            Console.WriteLine(Encoding.Default.GetString(data_OUT.DATE));
+            Console.WriteLine(Encoding.Default.GetString(data_OUT.TIME));
+            Console.WriteLine(Encoding.Default.GetString(data_OUT.TRACE));
+            Console.WriteLine(Encoding.Default.GetString(data_OUT.CHANNEL));
+            Console.WriteLine(Encoding.Default.GetString(data_OUT.CHANNELORDERNO));
+            Console.WriteLine(Encoding.Default.GetString(data_OUT.MERCHANTORDERNO));
+            Console.WriteLine(Encoding.Default.GetString(data_OUT.NOTE));
+            Console.WriteLine("-------------------------------------");
+            Console.WriteLine(Encoding.UTF8.GetString(data_OUT.RETCODE));
+            Console.WriteLine(Encoding.UTF8.GetString(data_OUT.CARDNO));
+            Console.WriteLine(Encoding.UTF8.GetString(data_OUT.CARDTYPE));
+            Console.WriteLine(Encoding.UTF8.GetString(data_OUT.AMOUNT));
+            Console.WriteLine(Encoding.UTF8.GetString(data_OUT.DATE));
+            Console.WriteLine(Encoding.UTF8.GetString(data_OUT.TIME));
+            Console.WriteLine(Encoding.UTF8.GetString(data_OUT.TRACE));
+            Console.WriteLine(Encoding.UTF8.GetString(data_OUT.CHANNEL));
+            Console.WriteLine(Encoding.UTF8.GetString(data_OUT.CHANNELORDERNO));
+            Console.WriteLine(Encoding.UTF8.GetString(data_OUT.MERCHANTORDERNO));
+            Console.WriteLine(Encoding.UTF8.GetString(data_OUT.NOTE));
             Console.WriteLine("OK!");
         }
 
