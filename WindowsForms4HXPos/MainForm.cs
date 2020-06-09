@@ -7,13 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using Fleck;
+using Newtonsoft.Json;
 
 namespace WindowsForms4HXPos
 {
 
     public partial class MainForm : Form
     {
-        /// </summary>
+        bool started = false;
+
         [StructLayout(LayoutKind.Sequential)]
         public struct DATA_IN
         {
@@ -183,9 +186,78 @@ namespace WindowsForms4HXPos
             Console.WriteLine("OK!");
         }
 
-     
-        private void axmainFrame1_Enter(object sender, EventArgs e)
+        public string pay(string message)
         {
+            DATA_IN data_IN = new DATA_IN(1);
+            Array.Copy(Encoding.UTF8.GetBytes("03"), data_IN.transtype, Encoding.UTF8.GetBytes("03").Length);
+
+            var amoutArray = Encoding.UTF8.GetBytes((float.Parse(message) * 100).ToString().PadLeft(12, '0'));
+            Array.Copy(amoutArray, data_IN.amout, amoutArray.Length);
+
+            Array.Copy(Encoding.UTF8.GetBytes("1"), data_IN.orderno, Encoding.UTF8.GetBytes("1").Length);
+            Array.Copy(Encoding.UTF8.GetBytes("1"), data_IN.name, Encoding.UTF8.GetBytes("1").Length);
+            var dataTimeArray = Encoding.UTF8.GetBytes(DateTime.Now.ToString("yyyyMMddHHmmss"));
+            Array.Copy(dataTimeArray, data_IN.beginTime, dataTimeArray.Length);
+            Array.Copy(dataTimeArray, data_IN.endTime, dataTimeArray.Length);
+            Array.Copy(Encoding.UTF8.GetBytes("1"), data_IN.note, Encoding.UTF8.GetBytes("1").Length);
+
+            DATA_OUT data_OUT = new DATA_OUT(2);
+
+            long result = CebMisPosInterface(ref data_IN, ref data_OUT);
+
+            ReturnMsg returnMsg = new ReturnMsg();
+            returnMsg.RETCODE = Encoding.Default.GetString(data_OUT.RETCODE).Trim();
+            returnMsg.CARDNO = Encoding.Default.GetString(data_OUT.CARDNO).Trim();
+            returnMsg.CARDTYPE = Encoding.Default.GetString(data_OUT.CARDTYPE).Trim();
+            returnMsg.AMOUNT = Encoding.Default.GetString(data_OUT.AMOUNT).Trim();
+            returnMsg.DATE = Encoding.Default.GetString(data_OUT.DATE).Trim();
+            returnMsg.TIME = Encoding.Default.GetString(data_OUT.TIME).Trim();
+            returnMsg.TRACE = Encoding.Default.GetString(data_OUT.TRACE).Trim();
+            returnMsg.CHANNEL = Encoding.Default.GetString(data_OUT.CHANNEL).Trim();
+            returnMsg.CHANNELORDERNO = Encoding.Default.GetString(data_OUT.CHANNELORDERNO).Trim();
+            returnMsg.MERCHANTORDERNO = Encoding.Default.GetString(data_OUT.MERCHANTORDERNO).Trim();
+            returnMsg.NOTE = Encoding.Default.GetString(data_OUT.NOTE).Trim();
+            var returnInfo = JsonConvert.SerializeObject(returnMsg);
+            Console.WriteLine("------------------" + returnInfo + "-------------------");
+            return returnInfo;
+        }
+
+        public void startWebsocket()
+        {
+            FleckLog.Level = LogLevel.Debug;
+            var allSockets = new List<IWebSocketConnection>();
+            var server = new WebSocketServer("ws://0.0.0.0:7181");
+            server.Start(socket =>
+            {
+                socket.OnOpen = () =>
+                {
+                    Console.WriteLine("Open!");
+                    allSockets.Add(socket);
+                };
+
+                socket.OnClose = () =>
+                {
+                    Console.WriteLine("Close!");
+                    allSockets.Remove(socket);
+                };
+
+                socket.OnMessage = message =>
+                {
+                    Console.WriteLine(message);
+
+                    socket.Send("Echo: " + new MainForm().pay(message));
+                };
+            });
+        }
+
+        private void startWebsocketBtn_Click(object sender, EventArgs e)
+        {
+            if (!started)
+            {
+                startWebsocket();
+                started = true;
+                infoLbl.Text += "\n服务启动成功！！！";
+            }
 
         }
     }
